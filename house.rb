@@ -57,11 +57,11 @@ module Enumerable
   def my_none?(param = nil)
     arr = to_a
     if block_given?
-      (0..arr.length - 1).each { |i| return false if yield(arr[i]) }
+      arr.length.times { |i| return false if yield(arr[i]) }
     elsif !param.nil?
-      (0..arr.length - 1).each { |i| return false if arr[i].is_a? param }
+      return false unless arr.grep(param).empty?
     else
-      (0..arr.length - 1).each { |i| return false unless arr[i].nil? || arr[i] == false }
+      arr.length.times { |i| return false unless arr[i].nil? || arr[i] == false }
     end
     true
   end
