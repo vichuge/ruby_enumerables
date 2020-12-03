@@ -123,8 +123,8 @@ module Enumerable
 
   def multiply_els
     arr = to_a
-    start = 1
-    (0..arr.length - 1).my_each { |i| start *= arr[i] }
-    start
+    result = 1
+    arr.length.times { |i| result *= arr[i] }
+    result
   end
 end
