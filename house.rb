@@ -1,6 +1,3 @@
-#rubocop:disable Metrics/CyclomaticComplexity
-#rubocop:disable Metrics/PerceivedComplexity
-
 module Enumerable
   def my_each
     return enum_for unless block_given?
@@ -95,33 +92,31 @@ module Enumerable
     ret
   end
 
-  def my_inject(st = 0, param = nil)
-    return enum_for unless block_given? || !st.nil?
+  def my_inject(sta = 0, param = nil)
+    return enum_for unless block_given? || !sta.nil?
 
     arr = to_a
-    if st.is_a?(Symbol)
-      param = st
-      st = 0
-    end
+    param = sta if sta.is_a?(Symbol)
+    sta = 0 if sta.is_a?(Symbol)
     if param
       arr.length.times do |i|
         case param
-        when :+ then st += arr[i]
-        when :- then st -= arr[i]
-        when :* then st *= arr[i]
-        when :/ then st /= arr[i]
+        when :+ then sta += arr[i]
+        when :- then sta -= arr[i]
+        when :* then sta *= arr[i]
+        when :/ then sta /= arr[i]
         else return enum_for
         end
       end
     elsif arr[0].is_a?(Integer)
-      arr.length.times { |i| st = yield(st, arr[i]) } 
+      arr.length.times { |i| sta = yield(sta, arr[i]) } 
     else
-      st = arr[0]
+      sta = arr[0]
       arr.length.times do |i| 
-        st = yield(st, arr[i])
+        sta = yield(sta, arr[i])
       end
     end
-    st
+    sta
   end
 
   def multiply_els
@@ -131,6 +126,3 @@ module Enumerable
     result
   end
 end
-
-#rubocop:enable Metrics/CyclomaticComplexity
-#rubocop:enable Metrics/PerceivedComplexity
