@@ -80,14 +80,14 @@ module Enumerable
   end
 
   def my_map(proc = nil)
-    return enum_for unless block_given?
+    return enum_for unless block_given? || !proc.nil?
 
     arr = to_a
     ret = []
-    if block_given?
-      (0..arr.length - 1).my_each { |i| ret.push(yield(arr[i])) }
+    if proc
+      arr.length.times { |i| ret << proc.call(arr[i]) }
     else
-      (0..arr.length - 1).my_each { |i| ret << proc.call(arr[i]) }
+      arr.length.times { |i| ret.push(yield(arr[i])) }
     end
     ret
   end
