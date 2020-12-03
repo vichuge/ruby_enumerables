@@ -1,22 +1,27 @@
-# rubocop:disable Metrics/CyclomaticComplexity
-# rubocop:disable Metrics/PerceivedComplexity
-
 module Enumerable
   def my_each
+    return enum_for unless block_given?
+
     arr = to_a
     (0..arr.length - 1).each do |i|
       yield(arr[i])
     end
+    self
   end
 
   def my_each_with_index
+    return enum_for unless block_given?
+
     arr = to_a
-    (0..arr.length - 1).each do |i|
+    (0..arr.length - 1).my_each do |i|
       yield(arr[i], i)
     end
+    self
   end
 
   def my_select
+    return enum_for unless block_given?
+
     arr = to_a
     new_a = []
     (0..arr.length - 1).each do |i|
@@ -77,6 +82,8 @@ module Enumerable
   end
 
   def my_map(proc = nil)
+    return enum_for unless block_given?
+    
     arr = to_a
     ret = []
     if block_given?
@@ -101,6 +108,3 @@ module Enumerable
     start
   end
 end
-
-# rubocop:enable Metrics/CyclomaticComplexity
-# rubocop:enable Metrics/PerceivedComplexity
