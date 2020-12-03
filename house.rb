@@ -37,7 +37,7 @@ module Enumerable
     if block_given?
       arr.length.times { |i| return false unless yield(arr[i]) }
     elsif !param.nil?
-      arr.length.times { |i| return false unless arr[i].is_a? param }
+      return false if arr.grep(param) != arr
     else
       arr.length.times { |i| return false if arr[i].nil? || arr[i] == false }
     end
