@@ -46,12 +46,10 @@ module Enumerable
 
   def my_any?(param = nil)
     arr = to_a
-    if block_given?
-      (0..arr.length - 1).each { |i| return true if yield(arr[i]) }
-    elsif !param.nil?
-      (0..arr.length - 1).each { |i| return true if arr[i].is_a? param }
-    else
-      (0..arr.length - 1).each { |i| return true unless arr[i].nil? }
+    arr.length.times do |i|
+      return true if block_given? && yield(arr[i])
+      return true unless !param.nil? && arr.grep(param).empty?
+      return true if arr[i].nil? || arr[i] == false
     end
     false
   end

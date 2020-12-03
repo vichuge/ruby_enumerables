@@ -1,13 +1,26 @@
 module Enumerable
-  def my_all?(param = nil)
+  def my_none?(param = nil)
     arr = to_a
-    if block_given?
-      arr.length.times { |i| return false unless yield(arr[i]) }
-    elsif !param.nil?
-      return false if arr.grep(param) != arr
-    else
-      arr.length.times { |i| return false if arr[i].nil? || arr[i] == false }
+    arr.length.times do |i|
+      return true if block_given? && yield(arr[i])
+      return true unless !param.nil? && arr.grep(param).empty?
+      return true if arr[i].nil? || arr[i] == false
     end
-    true
+    false
   end
 end
+
+
+p %w{ant bear cat}.none? { |word| word.length == 5 } #=> true
+p %w{ant bear cat}.none? { |word| word.length >= 4 } #=> false
+p %w{ant bear cat}.none?(/d/)                        #=> true
+p [1, 3.14, 42].none?(Float)                         #=> false
+p [].none?                                           #=> true
+p [nil].none?                                        #=> true
+p [nil, false].none?                                 #=> true
+p [nil, false, true].none?                           #=> false
+
+p ['q', 'qq'].none?(/d/)              # true
+p ['d', 'dd'].my_none?(/d/)           # TypeError
+p ['e', 'er'].none?("e")              # false
+p ['e', 'er'].my_none?("e")           # TypeError
