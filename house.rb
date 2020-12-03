@@ -1,7 +1,10 @@
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
+
 module Enumerable
   def my_each
     arr = to_a
-    for i in 0..arr.length-1
+    (0..arr.length - 1).each do |i|
       yield(arr[i])
     end
   end
@@ -98,3 +101,6 @@ module Enumerable
     start
   end
 end
+
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
