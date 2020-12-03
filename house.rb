@@ -35,11 +35,11 @@ module Enumerable
   def my_all?(param = nil)
     arr = to_a
     if block_given?
-      (0..arr.length - 1).each { |i| return false unless yield(arr[i]) }
+      arr.length.times { |i| return false unless yield(arr[i]) }
     elsif !param.nil?
-      (0..arr.length - 1).each { |i| return false unless arr[i].is_a? param }
+      arr.length.times { |i| return false unless arr[i].is_a? param }
     else
-      (0..arr.length - 1).each { |i| return false if arr[i].nil? }
+      arr.length.times { |i| return false if arr[i].nil? || arr[i] == false }
     end
     true
   end
