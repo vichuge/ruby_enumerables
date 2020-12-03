@@ -70,11 +70,11 @@ module Enumerable
     arr = to_a
     elem = 0
     if block_given?
-      (0..arr.length).my_each { |i| elem += 1 if yield(i) }
+      arr.length.times { |i| elem += 1 if yield(arr[i]) }
     elsif !param.nil?
-      (0..arr.length).my_each { |i| elem += 1 if arr[i] == param }
+      arr.length.times { |i| elem += 1 if arr[i] == param }
     else
-      (0..arr.length - 1).my_each { |_| elem += 1 }
+      arr.length.times { |_| elem += 1 }
     end
     elem
   end
