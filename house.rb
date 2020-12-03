@@ -92,11 +92,33 @@ module Enumerable
     ret
   end
 
-  def my_inject(param = nil)
+  def my_inject(st = 0, param = nil)
+    return enum_for unless block_given? || !st.nil?
+
     arr = to_a
-    adding = param.nil? ? 0 : param
-    (0..arr.length - 1).my_each { |i| adding = yield(adding, arr[i]) }
-    adding
+    if st.is_a?(Symbol)
+      param = st
+      st = 0
+    end
+    if param
+      arr.length.times do |i|
+        case param
+        when :+ then st += arr[i]
+        when :- then st -= arr[i]
+        when :* then st *= arr[i]
+        when :/ then st /= arr[i]
+        else return enum_for
+        end
+      end
+    elsif arr[0].is_a?(Integer)
+      arr.length.times { |i| st = yield(st, arr[i]) } 
+    else
+      st = arr[0]
+      arr.length.times do |i| 
+        st = yield(st, arr[i])
+      end
+    end
+    st
   end
 
   def multiply_els
