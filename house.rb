@@ -1,3 +1,7 @@
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/ModuleLength
+
 module Enumerable
   def my_each
     return enum_for unless block_given?
@@ -54,7 +58,7 @@ module Enumerable
     end
     return false if arr.empty?
     return true if exist_falses == false && !block_given? && param.nil?
-    
+
     false
   end
 
@@ -113,20 +117,24 @@ module Enumerable
         end
       end
     elsif arr[0].is_a?(Integer)
-      arr.length.times { |i| sta = yield(sta, arr[i]) } 
+      arr.length.times do |i|
+        sta = arr[0] if i.zero?
+        sta = yield(sta, arr[i]) unless i.zero?
+      end
     else
       sta = arr[0]
-      arr.length.times do |i| 
+      arr.length.times do |i|
         sta = yield(sta, arr[i])
       end
     end
     sta
   end
-
-  def multiply_els
-    arr = to_a
-    result = 1
-    arr.length.times { |i| result *= arr[i] }
-    result
-  end
 end
+
+def multiply_els(elements)
+  elements.my_inject { |one, two| one * two }
+end
+
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/ModuleLength

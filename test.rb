@@ -1,35 +1,42 @@
 module Enumerable
-  def my_any?(param = nil)
-    arr = to_a
-    exist_falses = false
-    arr.length.times do |i|
-      return true if block_given? && yield(arr[i])
-      return true if !param.nil? && arr[i].is_a?(param)
-      return false && exist_falses = true if arr[i] == false
-    end
-    return false if arr.empty?
-    return true if exist_falses == false && !block_given? && param.nil?
+  def my_inject(sta = 0, param = nil)
+    return enum_for unless block_given? || !sta.nil?
 
-    false
+    arr = to_a
+    param = sta if sta.is_a?(Symbol)
+    sta = 0 if sta.is_a?(Symbol)
+    if param
+      arr.length.times do |i|
+        case param
+        when :+ then sta += arr[i]
+        when :- then sta -= arr[i]
+        when :* then sta *= arr[i]
+        when :/ then sta /= arr[i]
+        else return enum_for
+        end
+      end
+    elsif arr[0].is_a?(Integer)
+      arr.length.times do |i|
+        sta = arr[0] if i.zero?
+        sta = yield(sta, arr[i]) unless i.zero?
+      end
+    else
+      sta = arr[0]
+      arr.length.times do |i|
+        sta = yield(sta, arr[i])
+      end
+    end
+    sta
   end
 end
 
-p %w[ant bear catas].my_any? { |word| word.length == 5 } #=> true
-p %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
-p %w[ant bea cat].my_any? { |word| word.length >= 4 } #=> false
-p [1, 2i, 3.14].my_any?(Numeric) #=>true
-p ['p', 2i, 3.14].my_any?(Numeric) #=> true
-p %w[p n s].my_any?(Numeric) #=> false
-p [nil, true, 99].my_any? #=> true #----------------------------------------
-p [].my_any? #=> false
-p [nil, nil].my_any? #=> true
-p [nil, false].my_any? #=> false
-p [nil, false, true].my_any? #=> false
+ p (5..10).my_inject { |sum, n| sum + n }            #=> 45
+ p (5..10).my_inject(1) { |product, n| product * n } #=> 151200
+# p (5..10).multiply_els
+ p longest = [3, 4, 5, 10, 77].my_inject { |num1, num2| num1 > num2 ? num1 : num2 } #=> 77
 
-
-false_block = proc { |num| num > 9 }
-array = Array.new(100) { rand(0...9) }
-p array.my_any?(&false_block)    # => false
-p array.any?(&false_block)    # => false
-p [nil, false, nil, false].my_any? #=> false
-p [nil, false, nil, false].any? #=> false
+range = Range.new(5, 50)
+p actual = range.my_inject { |prod, n| prod * n }
+p expected = range.inject { |a, b| a * b }
+p actual = range.my_inject { |prod, n| prod + n }
+p expected = range.inject { |a, b| a + b }
