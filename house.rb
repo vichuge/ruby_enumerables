@@ -1,4 +1,3 @@
-# rubocop:disable Layout/EndOfLine
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
 # rubocop:disable Metrics/ModuleLength
@@ -137,7 +136,6 @@ def multiply_els(elements)
   elements.my_inject { |one, two| one * two }
 end
 
-# rubocop:enable Layout/EndOfLine
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Metrics/ModuleLength
