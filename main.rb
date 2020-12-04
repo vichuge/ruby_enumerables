@@ -110,7 +110,7 @@ module Enumerable
     sta = 0 if sta.is_a?(Symbol)
     if param
       arr.length.times do |i|
-        sta = arr[0] if i.zero? && sta == 0
+        sta = arr[0] if i.zero? && sta.zero?
         case param
         when :+ then sta += arr[i] unless i.zero?
         when :- then sta -= arr[i] unless i.zero?
