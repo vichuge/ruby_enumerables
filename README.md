@@ -35,4 +35,4 @@ Give an ⭐️ if you like this project!
 
 ## 📝 License
 
-This project is [MIT](https://github.com/vichuge/ruby_enumerables/blob/main/LICENSE) licensed.
+This project is [MIT](https://github.com/vichuge/ruby_enumerables/blob/main/LICENSE) licensed, thanks.
