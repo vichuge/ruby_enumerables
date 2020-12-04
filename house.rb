@@ -48,7 +48,7 @@ module Enumerable
     arr = to_a
     arr.length.times do |i|
       return true if block_given? && yield(arr[i])
-      return true unless !param.nil? && arr.grep(param).empty?
+      return true if !param.nil? && arr[i].is_a?(param)
       return true if arr[i].nil? || arr[i] == false
     end
     false
