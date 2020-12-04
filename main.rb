@@ -110,18 +110,18 @@ module Enumerable
     sta = 0 if sta.is_a?(Symbol)
     if param
       arr.length.times do |i|
+        sta = arr[0] if i.zero? && sta == 0
         case param
-        when :+ then sta += arr[i]
-        when :- then sta -= arr[i]
-        when :* then sta *= arr[i]
-        when :/ then sta /= arr[i]
+        when :+ then sta += arr[i] unless i.zero?
+        when :- then sta -= arr[i] unless i.zero?
+        when :* then sta *= arr[i] unless i.zero?
+        when :/ then sta /= arr[i] unless i.zero?
         else return enum_for
         end
       end
     elsif arr[0].is_a?(Integer)
       arr.length.times do |i|
-        sta = arr[0] if i.zero?
-        sta = yield(sta, arr[i]) unless i.zero?
+        sta = yield(sta, arr[i])
       end
     else
       sta = arr[0]
