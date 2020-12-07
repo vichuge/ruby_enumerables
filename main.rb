@@ -101,8 +101,6 @@ module Enumerable
   end
 
   def my_inject(sta = nil, param = nil)
-    return enum_for unless block_given? || !sta.nil?
-
     arr = to_a
     if block_given? && sta.nil?
       arr.length.times do |i|
@@ -123,8 +121,8 @@ module Enumerable
       arr.length.times do |i|
         sta = sta.send(param, arr[i])
       end
-    else
-      sta = 'Error!'
+    elsif !block_given?
+      raise LocalJumpError
     end
     sta
   end
