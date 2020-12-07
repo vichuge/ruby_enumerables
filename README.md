@@ -4,7 +4,7 @@
 
 > You learned about the Enumerable module that gets mixed into the Array and Hash classes (among others) and provides you with lots of handy iterator methods. To prove that there's no magic to it, you're going to rebuild those methods.
 
-**This project was build with ruby 2.7.0p0 (2019-12-25 revision 647ee6f091) [x86_64-linux-gnu]**
+**This project was build with ruby 2.6.6p146 (2020-03-31 revision 67876) [x86_64-linux]**
 
 ## Built With
 
