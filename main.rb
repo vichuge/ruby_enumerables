@@ -118,7 +118,8 @@ module Enumerable
       end
     elsif arr[0].is_a?(Integer)
       arr.length.times do |i|
-        sta = yield(sta, arr[i])
+        sta = arr[0] if i.zero?
+        sta = yield(sta, arr[i]) unless i.zero?
       end
     else
       sta = arr[0]
