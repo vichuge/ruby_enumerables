@@ -53,6 +53,7 @@ module Enumerable
     arr = to_a
     arr.length.times do |i|
       return true if block_given? && yield(arr[i])
+      return true if param == arr[i] && !param.nil?
       return true if param.is_a?(Class) && arr[i].is_a?(param)
       return true if param.instance_of?(Regexp) && arr[i].to_s.match(param.to_s)
       return true if arr[i] == true
@@ -99,33 +100,31 @@ module Enumerable
     ret
   end
 
-  def my_inject(sta = 0, param = nil)
+  def my_inject(sta = nil, param = nil)
     return enum_for unless block_given? || !sta.nil?
 
     arr = to_a
-    param = sta if sta.is_a?(Symbol)
-    sta = 0 if sta.is_a?(Symbol)
-    if param
+    if block_given? && sta.nil?
       arr.length.times do |i|
-        sta = arr[0] if i.zero? && sta.zero?
-        case param
-        when :+ then sta += arr[i] unless i.zero?
-        when :- then sta -= arr[i] unless i.zero?
-        when :* then sta *= arr[i] unless i.zero?
-        when :/ then sta /= arr[i] unless i.zero?
-        else return enum_for
-        end
-      end
-    elsif arr[0].is_a?(Integer)
-      arr.length.times do |i|
-        sta = arr[0] if i.zero?
+        sta = arr[i] if i.zero?
         sta = yield(sta, arr[i]) unless i.zero?
       end
-    else
-      sta = arr[0]
+    elsif block_given?
       arr.length.times do |i|
         sta = yield(sta, arr[i])
       end
+    elsif !sta.nil? && param.nil?
+      param = sta
+      arr.length.times do |i|
+        sta = arr[0] if i.zero?
+        sta = sta.send(param, arr[i]) unless i.zero?
+      end
+    elsif !sta.nil? && param.is_a?(Symbol)
+      arr.length.times do |i|
+        sta = sta.send(param, arr[i])
+      end
+    else
+      sta = 'Error!'
     end
     sta
   end
