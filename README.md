@@ -23,6 +23,11 @@
 - GitHub: [@vichuge](https://github.com/vichuge)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/victor-pacheco-7946aab2/)
 
+👤 **Miguel Ricaño**
+
+- Github: [@mricanho](https://github.com/mricanho)
+- Linkedin: [Miguel Ricaño](https://www.linkedin.com/in/mricanho/)
+
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
