@@ -40,13 +40,16 @@ describe Enumerable do
 
   describe '.my_any?' do
     it "returns true if one of the items exceed in length the value given" do
-      expect(%w[ant bear cat].any? { |word| word.length >= 4 }).to eql(true)
+      expect(%w[ant bear cat].my_any? { |word| word.length >= 4 }).to eql(true)
     end
 
     it "returns true if any of the items is an integer" do
-      expect([nil, true, 99].any?(Integer)).to eql(true)
+      expect([nil, true, 99].my_any?(Integer)).to eql(true)
     end
 
+    it "returns false if there's an empty array" do
+      expect([].my_any?).to eql(false)
+    end
   end
 end
 
