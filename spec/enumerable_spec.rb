@@ -32,6 +32,21 @@ describe Enumerable do
     it "doesn't return true if an item is false or nil" do
       expect([nil, true, 99].my_all?).to eql(false) 
     end
+
+    it "returns false if the item doesn't have the value contrasted" do
+      expect(%w[dance girl gasoline].my_all?(/x/)).to eql(false)
+    end
+  end
+
+  describe '.my_any?' do
+    it "returns true if one of the items exceed in length the value given" do
+      expect(%w[ant bear cat].any? { |word| word.length >= 4 }).to eql(true)
+    end
+
+    it "returns true if any of the items is an integer" do
+      expect([nil, true, 99].any?(Integer)).to eql(true)
+    end
+
   end
 end
 
