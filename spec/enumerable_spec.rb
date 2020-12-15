@@ -80,6 +80,24 @@ describe Enumerable do
     it "return the array with changes according the block" do
       expect(%w[a b c].my_map { |string| string.upcase }).to eql(%w[A B C])
     end
+
+    it "return the array adding 1 to each element" do
+      expect(array.my_map { |element| element + 1 }).to eql([2, 3, 4, 5, 6, 7])
+    end
+  end
+
+  describe '.my_inject' do
+    it "return the multiplication of all numbers inside the array starting with four" do
+      expect((5..10).my_inject(4) { |prod, n| prod * n }).to eql(604800)
+    end
+
+    it "return the multiplication of all numbers inside the array starting with two" do
+      expect((5..10).my_inject(2, :*)).to eql(302400)
+    end
+
+    it "return the add to all the elements in the array" do
+      expect(array.my_inject { |accum, elem| accum + elem }).to eql(21)
+    end
   end
 end
 
