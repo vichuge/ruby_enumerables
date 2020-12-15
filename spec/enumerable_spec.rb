@@ -51,6 +51,36 @@ describe Enumerable do
       expect([].my_any?).to eql(false)
     end
   end
+
+  describe '.my_none?' do
+    it "return if all the items doesn't have a length of 5 letters" do
+      expect(%w{ant bear cat}.my_none? { |word| word.length == 5 }).to eql(true)
+    end
+
+    it "return false if all elements aren't float" do
+      expect([1, 3.14, 42].my_none?(Float)).to eql(false)
+    end
+
+    it "return false if any of the elements are true" do
+      expect([nil, false, true].my_none?).to eql(false)
+    end
+  end
+
+  describe '.my_count' do
+    it "Count the numbers of the element" do
+      expect([1, 2, 4, 2].my_count).to eql(4)
+    end
+
+    it "Count the numbers of the element multiple of two" do
+      expect([1, 2, 4, 2].my_count { |x| x%2 == 0 }).to eql(3)
+    end
+  end
+  
+  describe '.my_map' do
+    it "return the array with changes according the block" do
+      expect(%w[a b c].my_map { |string| string.upcase }).to eql(%w[A B C])
+    end
+  end
 end
 
   
